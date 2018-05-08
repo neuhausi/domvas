@@ -48,8 +48,23 @@
 
 			left = (left || 0);
 			top = (top || 0);
+			
+			var clone = origElem.cloneNode(false);
+
+      var cloneNode = function(node, parent) {
+  			var children = node.childNodes;
+  			if (children.length === 0) {
+  				return node.cloneNode(true);
+  			} else {
+        	children.forEach(function(child) {
+        		parent.appendChild(cloneNode(child, node));
+        	});
+        	return parent;
+  			}
+      }
 
 			var elem = origElem.cloneNode(true);
+			//var elem = cloneNode(origElem, clone);
 
 			// inline all CSS (ugh..)
 			inlineStyles(elem, origElem);
